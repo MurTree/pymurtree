@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PyMurTree &mdash; PyMurTree 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=f6245a2f"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API reference" href="api_reference.html" />
+    <link rel="prev" title="Welcome to PyMurTree’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PyMurTree
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">PyMurTree</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">PyMurTree</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#citation"><strong>Citation</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install-from-source-using-pip">Install from source using <code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#building-and-running-the-tests">Building and running the tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#datasets">Datasets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#contributing">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">For developers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PyMurTree</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">PyMurTree</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/readme.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pymurtree">
+<h1>PyMurTree<a class="headerlink" href="#pymurtree" title="Permalink to this heading"></a></h1>
+<p><a class="reference external" href="https://github.com/MurTree/pymurtree/blob/master/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/koenderinklab/openddm?" /></a>
+<img alt="GitHub Workflow Status (with event)" src="https://img.shields.io/github/actions/workflow/status/MurTree/pymurtree/wheels.yml" />
+<a class="reference external" href="https://codecov.io/gh/MurTree/pymurtree"><img alt="codecov" src="https://codecov.io/gh/koenderinklab/openddm/branch/master/graph/badge.svg?token=V4VZcNYyMG" /></a>
+<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/MurTree/pymurtree" /></p>
+<p>Warning:</p>
+<blockquote>
+<div><p>This repository is under active development and currently in a pre-alpha state.
+The current version only supports Linux.</p>
+</div></blockquote>
+<p>PyMurTree is a Python wrapper for the <a class="reference external" href="https://github.com/DCC/murtree">MurTree project</a>. The MurTree algorithm constructs optimal classification trees that minimize the misclassification score of a given dataset while respecting constraints on depth and number of feature nodes. The sparse objective, which penalizes each node added in the tree, is also supported.</p>
+<hr class="docutils" />
+<section id="citation">
+<h2><strong>Citation</strong><a class="headerlink" href="#citation" title="Permalink to this heading"></a></h2>
+<p>This package is based on the methods and algorithms described in:</p>
+<blockquote>
+<div><p><strong>“MurTree: Optimal Decision Trees via Dynamic Programming and Search”</strong><br />
+by Emir Demirović, Anna Lukina, Emmanuel Hebrard, Jeffrey Chan, James Bailey, Christopher Leckie, Kotagiri Ramamohanarao, and Peter J. Stuckey<br />
+Journal of Machine Learning Research (JMLR), 2022.<br />
+<a class="reference external" href="https://jmlr.org/papers/v23/20-520.html">Available online</a></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<p>Before attempting to install pymurtree, make sure your system has the following software available: Python version 3.7 or higher and pip.</p>
+<section id="install-from-source-using-pip">
+<h3>Install from source using <code class="docutils literal notranslate"><span class="pre">pip</span></code><a class="headerlink" href="#install-from-source-using-pip" title="Permalink to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/MurTree/pymurtree.git
+<span class="nb">cd</span><span class="w"> </span>pymurtree
+
+<span class="c1"># Optional: build pymurtree within a virtual environment</span>
+<span class="c1"># python3 --version # check your python version</span>
+<span class="c1"># sudo apt install python&lt;your_python_version&gt;-venv</span>
+<span class="c1"># python3 -m venv env</span>
+<span class="c1"># . env/bin/activate</span>
+<span class="w"> </span>
+<span class="c1"># Install</span>
+pip<span class="w"> </span>install<span class="w"> </span>.<span class="w"> </span>
+
+<span class="c1"># To install the dev version:</span>
+<span class="c1"># pip install .[dev] </span>
+</pre></div>
+</div>
+</section>
+<section id="building-and-running-the-tests">
+<h3>Building and running the tests<a class="headerlink" href="#building-and-running-the-tests" title="Permalink to this heading"></a></h3>
+<p>For building and running the tests, you will need the following software: pytest, a C++ compiler, and CMake   version 3.14 or higher.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run the Python tests</span>
+pytest
+
+<span class="c1"># Run the C++ tests</span>
+<span class="nb">cd</span><span class="w"> </span>tests/cpptests
+mkdir<span class="w"> </span>build
+<span class="nb">cd</span><span class="w"> </span>build
+cmake<span class="w"> </span>..
+make
+ctest
+</pre></div>
+</div>
+</section>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h2>
+<p>The full <a class="reference external" href="https://murtree.github.io/pymurtree/api_reference.html">API specification</a> is available in the repo’s Wiki.</p>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h3>
+<p>After installing pymurtree you can use it in your Python code by importing the package. Here’s an example of how to build a decision tree classifier from a training dataset, make predictions and export the tree for visualization with <a class="reference external" href="https://graphviz.org/">graphviz</a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pymurtree</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="c1"># Create training data</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span> <span class="c1"># features</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span> <span class="c1"># labels</span>
+
+<span class="c1"># Build tree classifier</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">pymurtree</span><span class="o">.</span><span class="n">OptimalDecisionTreeClassifier</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">max_num_nodes</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+
+<span class="c1"># Predict labels for a new set of features</span>
+<span class="n">ft</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">ft</span><span class="p">)</span>
+
+<span class="c1"># Visualize tree</span>
+<span class="n">model</span><span class="o">.</span><span class="n">export_text</span><span class="p">()</span>
+
+<span class="c1"># Export tree in DOT format for visualization with graphviz</span>
+<span class="n">model</span><span class="o">.</span><span class="n">export_dot</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="datasets">
+<h3>Datasets<a class="headerlink" href="#datasets" title="Permalink to this heading"></a></h3>
+<p>A collection of datsets compatible with pymurtree is available in <a class="reference external" href="https://github.com/MurTree/murtree-data">https://github.com/MurTree/murtree-data</a></p>
+</section>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this heading"></a></h2>
+<p>There are different ways in which you can contribute to pymurtree:</p>
+<ul class="simple">
+<li><p>Try the package and let us know if its useful for your work.</p></li>
+<li><p>If its useful, please star the repo.</p></li>
+<li><p>Report a bug or request a feature by opening an issue.</p></li>
+<li><p>Contribute to the codebase by opening a pull request.</p></li>
+<li><p>Currently pymurtree works only on Linux, any help picking open issues and fixing them for other platforms is welcome.</p></li>
+</ul>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this heading"></a></h2>
+<p><a class="reference download internal" download="" href="_downloads/9879d6db96fd29134fc802214163b95a/LICENSE"><span class="xref download myst">MIT LICENSE</span></a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to PyMurTree’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api_reference.html" class="btn btn-neutral float-right" title="API reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Yasel Quintero, Jose Urra, Emir Demirovic, Koos van der Linden.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
