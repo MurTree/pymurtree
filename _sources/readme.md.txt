@@ -66,7 +66,7 @@ ctest
 
 ## Usage
 
-The full [API specification](https://murtree.github.io/pymurtree/api_reference.html) is available in the repo's Wiki. 
+The full [API specification](https://murtree.github.io/pymurtree/api_reference.html) is available in the repo's documentation. 
 
 ### Example
 
