@@ -13,7 +13,6 @@
 
 namespace py = pybind11;
 using namespace MurTree;
-
 // This function is used to convert a numpy array to a vector of vectors holding feature vector binary types
 // that were defined in the murtree library
 std::vector<std::vector<FeatureVectorBinary>> ReadDataDL(const std::vector<std::vector<int>>& vector, int duplicate_instances_factor)
@@ -215,12 +214,14 @@ PYBIND11_MODULE(lib, m) {
 
     solver_result.def("export_text", [](const SolverResult &solverresult, std::string filepath) {
         py::scoped_ostream_redirect stream(std::cout, py::module_::import("sys").attr("stdout"));
-        ExportTree::exportText(solverresult.decision_tree_, filepath);
+        std::vector<std::string> v;
+        ExportTree::exportText(solverresult.decision_tree_, v, v, filepath);
     });
 
     solver_result.def("export_dot", [](const SolverResult &solverresult, std::string filepath) {
         py::scoped_ostream_redirect stream(std::cout, py::module_::import("sys").attr("stdout"));
-        ExportTree::exportDot(solverresult.decision_tree_, filepath);
+        std::vector<std::string> v;
+        ExportTree::exportDot(solverresult.decision_tree_, v, v, filepath);
     }); 
 
 }

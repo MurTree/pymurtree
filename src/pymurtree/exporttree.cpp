@@ -1,6 +1,7 @@
 #include "exporttree.h"
 
-void ExportTree::exportText(MurTree::DecisionNode* tree, std::string filepath) {
+void ExportTree::exportText(MurTree::DecisionNode* tree, const std::vector<std::string>& featurenames,
+    const std::vector<std::string>& classnames, std::string filepath) {
 
     if (tree == nullptr) {
         return;
@@ -8,14 +9,14 @@ void ExportTree::exportText(MurTree::DecisionNode* tree, std::string filepath) {
 
     try {
         if (filepath.empty()) {
-            ExportTree tmp(tree, &std::cout, true);
+            ExportTree tmp(tree, featurenames, classnames, &std::cout, true);
         }
         else {
             std::ofstream ofs(filepath, std::ofstream::out);
             if(!ofs.is_open() || ofs.fail()){
                 throw std::runtime_error("Failed to open text output file.");        
             }
-	        ExportTree tmp(tree, &ofs, true);
+	        ExportTree tmp(tree, featurenames, classnames, &ofs, true);
 	        ofs.close();
             std::cout << "Tree saved in " << filepath << std::endl;
         }
@@ -27,7 +28,8 @@ void ExportTree::exportText(MurTree::DecisionNode* tree, std::string filepath) {
 
 }
 
-void ExportTree::exportDot(MurTree::DecisionNode* tree, std::string filepath) {
+void ExportTree::exportDot(MurTree::DecisionNode* tree, const std::vector<std::string>& featurenames,
+    const std::vector<std::string>& classnames, std::string filepath) {
    
     if (tree == nullptr) {
         return;
@@ -42,7 +44,7 @@ void ExportTree::exportDot(MurTree::DecisionNode* tree, std::string filepath) {
         if (!ofs.is_open() || ofs.fail()) {
             throw std::runtime_error("Failed to open output file.");
         }
-        ExportTree tmp(tree, &ofs, false);
+        ExportTree tmp(tree, featurenames, classnames, &ofs, false);
         ofs.close(); 
         std::cout << "Tree saved in " << filepath << std::endl;
     }
@@ -52,8 +54,9 @@ void ExportTree::exportDot(MurTree::DecisionNode* tree, std::string filepath) {
     }
 }
 
-ExportTree::ExportTree(MurTree::DecisionNode* tree, std::ostream* os, bool textformat)
-    : m_tree(tree), m_os(os), nodecount(0)
+ExportTree::ExportTree(MurTree::DecisionNode* tree, const std::vector<std::string>& featurenames,
+    const std::vector<std::string>& classnames, std::ostream* os, bool textformat)
+    : m_tree(tree), featurenames(featurenames), classnames(classnames), m_os(os), nodecount(0)
 {
     if(textformat) {
         // print right-side first
@@ -88,8 +91,13 @@ void ExportTree::writeEdgeInTextFormat(MurTree::DecisionNode* parentnode, bool r
         output.append("class: " + std::to_string(parentnode->label_));
     }
     else {
-        output.append("feature #" + std::to_string(parentnode->feature_) + " is ");
-        rightedge ? output.append("present") : output.append("missing");  
+        if (featurenames.size() >= parentnode->feature_ + 1) {
+            output.append(featurenames[parentnode->feature_] + " is ");
+        }
+        else {
+            output.append("feature #" + std::to_string(parentnode->feature_) + " is ");
+        }
+        rightedge ? output.append("true") : output.append("false");  
     }
 
     for (int i = 0; i < indentationlevel; i++) {
