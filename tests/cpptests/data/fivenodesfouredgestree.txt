@@ -1,7 +1,7 @@
-|---feature #7 is present
-|   |---feature #3 is present
+|---feature #7 is true
+|   |---feature #3 is true
 |   |   |---class: 3
-|   |---feature #3 is missing
+|   |---feature #3 is false
 |   |   |---class: 2
-|---feature #7 is missing
+|---feature #7 is false
 |   |---class: 1

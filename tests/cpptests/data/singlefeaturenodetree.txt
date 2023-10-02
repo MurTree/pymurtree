@@ -1,2 +1,2 @@
-|---feature #11 is present
-|---feature #11 is missing
+|---feature #11 is true
+|---feature #11 is false
