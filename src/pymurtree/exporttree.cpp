@@ -1,7 +1,7 @@
 #include "exporttree.h"
 
 void ExportTree::exportText(MurTree::DecisionNode* tree, const std::vector<std::string>& featurenames,
-    const std::vector<std::string>& classnames, std::string filepath) {
+    const std::unordered_map<unsigned int, std::string>& classnames, std::string filepath) {
 
     if (tree == nullptr) {
         return;
@@ -29,7 +29,7 @@ void ExportTree::exportText(MurTree::DecisionNode* tree, const std::vector<std::
 }
 
 void ExportTree::exportDot(MurTree::DecisionNode* tree, const std::vector<std::string>& featurenames,
-    const std::vector<std::string>& classnames, std::string filepath) {
+    const std::unordered_map<unsigned int, std::string>& classnames, std::string filepath) {
    
     if (tree == nullptr) {
         return;
@@ -55,7 +55,7 @@ void ExportTree::exportDot(MurTree::DecisionNode* tree, const std::vector<std::s
 }
 
 ExportTree::ExportTree(MurTree::DecisionNode* tree, const std::vector<std::string>& featurenames,
-    const std::vector<std::string>& classnames, std::ostream* os, bool textformat)
+    const std::unordered_map<unsigned int, std::string>& classnames, std::ostream* os, bool textformat)
     : m_tree(tree), featurenames(featurenames), classnames(classnames), m_os(os), nodecount(0)
 {
     if(textformat) {
@@ -88,7 +88,14 @@ void ExportTree::writeEdgeInTextFormat(MurTree::DecisionNode* parentnode, bool r
     std::string output = "|---";
 
     if(parentnode->IsLabelNode()) {
-        output.append("class: " + std::to_string(parentnode->label_));
+        std::unordered_map<unsigned int, std::string>::const_iterator it = classnames.find(parentnode->label_);
+        if (it == classnames.end()) {
+            output.append("class: " + std::to_string(parentnode->label_));
+        }
+        else {
+            output.append(it->second);
+            //output.append("class: " +  classnames.at(parentnode->label_));
+        }
     }
     else {
         if (featurenames.size() >= parentnode->feature_ + 1) {

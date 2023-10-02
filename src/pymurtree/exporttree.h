@@ -1,4 +1,5 @@
 #include "solver_result.h"
+#include "unordered_map"
 
 class ExportTree {
 
@@ -8,30 +9,30 @@ public:
      * @brief Export the tree structure in text format
      * @param[in] tree          top node of the tree
      * @param[in] featurenames  names of features, generic names will be used if not specified (eg feature #3)
-     * @param[in] classnames    class names in ascending numerical order, training dataset labels will be used if not specified
+     * @param[in] classnames    class names, training dataset labels will be used if not specified
      * @param[in] filepath  path to output file, std::cout will be used if not specified 
      */
     static void exportText(MurTree::DecisionNode* tree = nullptr,
                             const std::vector<std::string>& featurenames = std::vector<std::string>(),
-                            const std::vector<std::string>& classnames = std::vector<std::string>(),
+                            const std::unordered_map<unsigned int, std::string>& classnames = std::unordered_map<unsigned int, std::string>(),
                             std::string filepath = "");
 
     /*
      * @brief Export the tree structure in DOT format
      * @param[in] tree          top node of the tree
      * @param[in] featurenames  names of features, generic names will be used if not specified (eg feature #3)
-     * @param[in] classnames    class names in ascending numerical order, training dataset labels will be used if not specified
+     * @param[in] classnames    class names, training dataset labels will be used if not specified
      * @param[in] filepath  path to output file, "tree.dot" will be used if not specified 
      */
     static void exportDot(MurTree::DecisionNode* tree = nullptr,
                             const std::vector<std::string>& featurenames = std::vector<std::string>(),
-                            const std::vector<std::string>& classnames = std::vector<std::string>(),
+                            const std::unordered_map<unsigned int, std::string>& classnames = std::unordered_map<unsigned int, std::string>(),
                             std::string filepath = "");
 
 private:
 
     ExportTree(MurTree::DecisionNode* tree, const std::vector<std::string>& featurenames,
-                const std::vector<std::string>& classnames, std::ostream* os, bool textformat);
+                const std::unordered_map<unsigned int, std::string>& classnames, std::ostream* os, bool textformat);
 
     /*
      * @brief Write the tree structure to m_os
@@ -54,7 +55,7 @@ private:
     std::ostream* m_os;
     const MurTree::DecisionNode* m_tree;
     const std::vector<std::string> featurenames;
-    const std::vector<std::string> classnames;    
+    const std::unordered_map<unsigned int, std::string> classnames;    
 
     // Utility counter used only when exporting in DOT format
     unsigned int nodecount;

@@ -214,14 +214,16 @@ PYBIND11_MODULE(lib, m) {
 
     solver_result.def("export_text", [](const SolverResult &solverresult, std::string filepath) {
         py::scoped_ostream_redirect stream(std::cout, py::module_::import("sys").attr("stdout"));
-        std::vector<std::string> v;
-        ExportTree::exportText(solverresult.decision_tree_, v, v, filepath);
+        std::vector<std::string> featurenames;
+        std::unordered_map<unsigned int, std::string> classnames;
+        ExportTree::exportText(solverresult.decision_tree_, featurenames, classnames, filepath);
     });
 
     solver_result.def("export_dot", [](const SolverResult &solverresult, std::string filepath) {
         py::scoped_ostream_redirect stream(std::cout, py::module_::import("sys").attr("stdout"));
-        std::vector<std::string> v;
-        ExportTree::exportDot(solverresult.decision_tree_, v, v, filepath);
+        std::vector<std::string> featurenames;
+        std::unordered_map<unsigned int, std::string> classnames;
+        ExportTree::exportDot(solverresult.decision_tree_, featurenames, classnames, filepath);
     }); 
 
 }
