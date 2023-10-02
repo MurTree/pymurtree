@@ -94,7 +94,6 @@ void ExportTree::writeEdgeInTextFormat(MurTree::DecisionNode* parentnode, bool r
         }
         else {
             output.append(it->second);
-            //output.append("class: " +  classnames.at(parentnode->label_));
         }
     }
     else {
@@ -144,10 +143,25 @@ void ExportTree::writeNodeInDotFormat(MurTree::DecisionNode* node, bool rightedg
     std::string output = std::to_string(nodecount);
 
     if(node->IsLabelNode()) {
-        output.append(" [label=<class " + std::to_string(node->label_) + ">, color=\"#B77F8C\" fillcolor=\"#B77F8C\"] ;\n");
+        std::string clsname;
+        std::unordered_map<unsigned int, std::string>::const_iterator it = classnames.find(node->label_);
+        if (it == classnames.end()) {
+            clsname.append("class " + std::to_string(node->label_));
+        }
+        else {
+            clsname.append(it->second);
+        }
+        output.append(" [label=<" + clsname + ">, color=\"#B77F8C\" fillcolor=\"#B77F8C\"] ;\n");
     }
     else {
-        output.append(" [label=<feature #" + std::to_string(node->feature_) + ">, color=\"#8CB77F\", fillcolor=\"#8CB77F\"] ;\n"); 
+        std::string ftname;
+        if (featurenames.size() >= node->feature_ + 1) {
+            ftname = featurenames[node->feature_];
+        }
+        else {
+            ftname = "feature #" + std::to_string(node->feature_);
+        } 
+        output.append(" [label=<" + ftname + ">, color=\"#8CB77F\", fillcolor=\"#8CB77F\"] ;\n"); 
     }
 
     if (parentid >= 0) {
