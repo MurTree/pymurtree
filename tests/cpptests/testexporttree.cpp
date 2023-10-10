@@ -208,6 +208,16 @@ TEST_F(ExportTreeTest, SingleFeatureNodeTreeDotFileOutputIsCorrect) {
      readFile("SingleFeatureNodeTreeDotFileOutputIsCorrect.dot"));
 }
 
+TEST_F(ExportTreeTest, SingleFeatureNodeTreeWithNamesDotFileOutputIsCorrect) {
+    std::vector<std::string> fn = {"fftt0", "fftt1", "fftt2", "fftt3", "fftt4",
+    "fftt5", "fftt6", "fftt7", "fftt8", "fftt9", "fftt10", "fftt11"};
+    ClassNames cn = ExportTreeTest::tree_5nodes_4edges_classnames;
+    ExportTree::exportDot(ExportTreeTest::tree_single_feature_node, fn, cn,
+    "SingleFeatureNodeTreeWithNamesDotFileOutputIsCorrect.txt");
+    EXPECT_EQ(readFile("../data/singlefeaturenodetreewithnames.dot"),
+     readFile("SingleFeatureNodeTreeWithNamesDotFileOutputIsCorrect.txt"));
+}
+
 TEST_F(ExportTreeTest, SingleLabelNodeTreeTextFileOutputIsCorrect) {
     std::vector<std::string> fn;
     ClassNames cn;
@@ -233,6 +243,15 @@ TEST_F(ExportTreeTest, SingleLabelNodeTreeDotFileOutputIsCorrect) {
      "SingleLabelNodeTreeDotFileOutputIsCorrect.dot");
     EXPECT_EQ(readFile("../data/singlelabelnodetree.dot"),
      readFile("SingleLabelNodeTreeDotFileOutputIsCorrect.dot"));
+}
+
+TEST_F(ExportTreeTest, SingleLabelNodeTreeWithNamesDotFileOutputIsCorrect) {
+    std::vector<std::string> fn = ExportTreeTest::tree_5nodes_4edges_featurenames;
+    ClassNames cn = ExportTreeTest::tree_5nodes_4edges_classnames;
+    ExportTree::exportDot(ExportTreeTest::tree_single_label_node, fn, cn,
+     "SingleLabelNodeTreeWithNamesDotFileOutputIsCorrect.txt");
+    EXPECT_EQ(readFile("../data/singlelabelnodetreewithnames.dot"),
+     readFile("SingleLabelNodeTreeWithNamesDotFileOutputIsCorrect.txt"));
 }
 
 TEST_F(ExportTreeTest, FiveNodesFourEdgesTreeTextFileOutputIsCorrect) {
@@ -261,4 +280,13 @@ TEST_F(ExportTreeTest, FiveNodesFourEdgesTreeDotFileOutputIsCorrect) {
      "FiveNodesFourEdgesTreeDotFileOutputIsCorrect.dot");
     EXPECT_EQ(readFile("../data/fivenodesfouredgestree.dot"),
      readFile("FiveNodesFourEdgesTreeDotFileOutputIsCorrect.dot"));
+}
+
+TEST_F(ExportTreeTest, FiveNodesFourEdgesTreeWithNamesDotFileOutputIsCorrect) {
+    std::vector<std::string> fn = ExportTreeTest::tree_5nodes_4edges_featurenames;
+    ClassNames cn = ExportTreeTest::tree_5nodes_4edges_classnames;
+    ExportTree::exportDot(ExportTreeTest::tree_5nodes_4edges, fn, cn,
+     "FiveNodesFourEdgesTreeWithNamesDotFileOutputIsCorrect.dot");
+    EXPECT_EQ(readFile("../data/fivenodesfouredgestreewithnames.dot"),
+     readFile("FiveNodesFourEdgesTreeWithNamesDotFileOutputIsCorrect.dot"));
 }
