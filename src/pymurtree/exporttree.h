@@ -1,5 +1,6 @@
 #include "solver_result.h"
 #include "unordered_map"
+#include <string>
 
 class ExportTree {
 
