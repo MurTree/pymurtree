@@ -10,7 +10,7 @@ Warning:
 > The current version only supports Linux.
 
 
-PyMurTree is a Python wrapper for the [MurTree project](https://github.com/DCC/murtree). The MurTree algorithm constructs optimal classification trees that minimize the misclassification score of a given dataset while respecting constraints on depth and number of feature nodes. The sparse objective, which penalizes each node added in the tree, is also supported.
+PyMurTree is a Python wrapper for the [MurTree project](https://github.com/MurTree/murtree). The MurTree algorithm constructs optimal classification trees that minimize the misclassification score of a given dataset while respecting constraints on depth and number of feature nodes. The sparse objective, which penalizes each node added in the tree, is also supported.
 
 ---
 ## **Citation**

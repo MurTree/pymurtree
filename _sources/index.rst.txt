@@ -18,6 +18,7 @@ Welcome to PyMurTree's documentation!
    :caption: For developers
    
    api_reference
+   lifecycle.md
 
 
 Indices and tables
