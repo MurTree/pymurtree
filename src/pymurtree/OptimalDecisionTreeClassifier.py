@@ -1,23 +1,23 @@
 import pandas as pd
 import numpy as np
-import os
-
 from . import lib
 from pymurtree.parameters import Parameters
 
 def standardize_to_dtype_int32(np_array: np.ndarray) -> np.ndarray:
-    '''
+    """
     By using a dtype object, we can make the method more robust 
     and ensure consistent behavior across different systems and configurations.
 
-    Args:
+    Parameters
+    ----------
         np_array (numpy.ndarray): A 2D array that represents the input features of the training data.
             Each row corresponds to an instance, and each column corresponds to a feature.
     
-    Returns:
+    Returns
+    -------
         numpy.ndarray: A 2D array that represents the input features of the training data.
 
-    '''
+    """
     int32_dtype = np.dtype(np.int32)
     if np_array.dtype != int32_dtype:
         np_array = np_array.astype(int32_dtype)
@@ -26,13 +26,17 @@ def standardize_to_dtype_int32(np_array: np.ndarray) -> np.ndarray:
         return np_array
     
 class OptimalDecisionTreeClassifier:
+    """
+    OptimalDecisionTreeClassifier is a class that represents a PyMurTree model.
+
+    """
     def __init__(self,
                  time: int = 600,
                  max_depth: int = 3,
-                 max_num_nodes: int = 7,
+                 max_num_nodes: int = None,
                  sparse_coefficient: float = 0.0,
-                 verbose: bool = True,
-                 all_trees: bool = True,
+                 verbose: bool = False,
+                 all_trees: bool = False,
                  incremental_frequency: bool = True,
                  similarity_lower_bound: bool = True,
                  node_selection: int = 0,
@@ -44,6 +48,10 @@ class OptimalDecisionTreeClassifier:
 
         self.__solver = None
         self.__tree = None
+
+        if max_num_nodes is None:
+            max_num_nodes = 2**max_depth - 1
+        max_num_nodes = min(2**max_depth - 1, max_num_nodes)
 
         self.__params = Parameters(time, max_depth, max_num_nodes,
                                    sparse_coefficient, verbose,
@@ -69,38 +77,54 @@ class OptimalDecisionTreeClassifier:
             random_seed: int = None,
             cache_type: int = None,
             duplicate_factor: int = None) -> None:
-        """
+        """   
         Fits a PyMurTree model to the given training data.
 
-        Args:
-            x (numpy.ndarray): A 2D array that represents the input features of the training data.
-            y (numpy.ndarray): A 1D array that represents the target variable of the training data.
-            time (int, optional): The maximum time budget in seconds allowed for fitting the model. Defaults to None.
-            max_depth (int, optional): The maximum depth of the trees in the ensemble. Defaults to None.
-            max_num_nodes (int, optional): The maximum number of nodes for each tree in the ensemble. Defaults to None.
-            sparse_coefficient (float, optional): The sparsity coefficient used for tree pruning. Defaults to None.
-            verbose (bool, optional): If True, prints the progress of the training process. Defaults to None.
-            all_trees (bool, optional): If True, returns all trees generated during the training process. Defaults to None.
-            incremental_frequency (bool, optional): If True, uses incremental frequency counting. Defaults to None.
-            similarity_lower_bound (bool, optional): If True, uses similarity lower bound pruning. Defaults to None.
-            node_selection (int, optional): The method used for node selection. Defaults to None.
-            feature_ordering (int, optional): The method used for feature ordering. Defaults to None.
-            random_seed (int, optional): The random seed for the training process. Defaults to None.
+        Parameters
+        ----------
+            x : (numpy.ndarray)
+                A 2D array that represents the input features of the training data.
+            y : 
+                (numpy.ndarray): A 1D array that represents the target variable of the training data.
+            time : (int, optional) 
+                The maximum time budget in seconds allowed for fitting the model. Defaults to None.
+            max_depth : (int, optional)
+                The maximum depth of the trees in the ensemble. Defaults to None.
+            max_num_nodes :(int, optional) 
+                The maximum number of nodes for each tree in the ensemble. Defaults to None.
+            sparse_coefficient : (float, optional)
+                The sparsity coefficient used for tree pruning. Defaults to None.
+            verbose : (bool, optional)
+                If True, prints the progress of the training process. Defaults to None.
+            all_trees : (bool, optional)
+                If True, returns all trees generated during the training process. Defaults to None.
+            incremental_frequency : (bool, optional) 
+                If True, uses incremental frequency counting. Defaults to None.
+            similarity_lower_bound : (bool, optional)
+                If True, uses similarity lower bound pruning. Defaults to None.
+            node_selection :(int, optional)
+                The method used for node selection. Defaults to None.
+            feature_ordering : (int, optional) 
+                The method used for feature ordering. Defaults to None.
+            random_seed : (int, optional) 
+                The random seed for the training process. Defaults to None.
             cache_type (int, optional): The type of cache used for storing the intermediate results. Defaults to None.
             duplicate_factor (int, optional): The duplicate factor used for parallelization. Defaults to None.
 
-        Returns:
+        Returns
+        -------
             None
 
-        Raises:
-            ValueError: If x or y is None or if they have different number of rows.
+        Raises
+        ------
+            ValueError: If x or y is None or if they have a different number of rows.
 
-        Examples:
+        Examples
+        --------
             >>> model = PyMurTree()
             >>> x_train = np.array([[1, 2], [3, 4]])
             >>> y_train = np.array([0, 1])
             >>> model.fit(x_train, y_train)
-
         """
         # Check data entry
         if x is None:
@@ -182,11 +206,13 @@ class OptimalDecisionTreeClassifier:
         """
         Predicts the target variable for the given input features.
 
-        Args:
+        Parameters
+        ----------
             x (numpy.ndarray): A 2D array that represents the input features of the test data.
                 Each row corresponds to an instance, and each column corresponds to a feature.
 
-        Returns:
+        Returns
+        -------
             numpy.ndarray: A 1D array that represents the predicted target variable of the test data.
                 The i-th element in this array corresponds to the predicted target variable for the i-th instance in `x`.
         """
@@ -198,38 +224,44 @@ class OptimalDecisionTreeClassifier:
     
 
     def score(self) -> int:
-        '''
+        """
         Returns the misclassification score of the tree.
 
-        Args:	
+        Parameters
+        ----------
             None
         
-        Returns:
+        Returns
+        -------
             int: The misclassification score of the tree.
-        '''
+        """
         return self.__tree.misclassification_score()
 
     def depth(self) -> int:
-        '''
+        """
         Returns the depth of the tree.
 
-        Args:
+        Parameters
+        ----------
             None
 
-        Returns:
+        Returns
+        -------
             int: The depth of the tree.    
 
-        '''
+        """
         return self.__tree.tree_depth()
 
     def num_nodes(self) -> int:
         '''
         Returns the number of nodes in the tree.
 
-        Args:
+        Parameters
+        ----------
             None
         
-        Returns:
+        Returns
+        -------
             int: The number of nodes in the tree.
         '''
 
@@ -240,10 +272,12 @@ class OptimalDecisionTreeClassifier:
         Create a text representation of all the rules in the decision tree. 
         Text is written to out_file if given, otherwise it is displayed on screen (standard ouput).
 
-        Args:
+        Parameters
+        ----------
             filepath (str, optional): Name of the output file.
         
-        Returns:
+        Returns
+        -------
             None
         '''
         
@@ -257,10 +291,10 @@ class OptimalDecisionTreeClassifier:
         '''
         Export the decision tree in DOT format for visualization with Graphviz.
 
-        Args:
+        Parameters
             filepath (str, optional): Name of the output file.
         
-        Returns:
+        Returns
             None
         '''
         if self.__tree is None:

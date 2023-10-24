@@ -31,7 +31,9 @@ ext_modules = [
                                     "murtree/code/MurTree/Data Structures/",
                                     "src/pymurtree/"],
                       # passing in the version to the compiled code
-                      define_macros=[('VERSION_INFO', __version__)]
+                      define_macros=[('VERSION_INFO', __version__)],
+                      language='c++',
+                      cxx_std=11
                       )
 ]
 

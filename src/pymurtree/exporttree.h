@@ -1,4 +1,5 @@
 #include "solver_result.h"
+#include <string>
 
 class ExportTree {
 

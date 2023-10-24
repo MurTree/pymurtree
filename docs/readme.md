@@ -1,8 +1,8 @@
 # PyMurTree 
 
-[![GitHub](https://img.shields.io/github/license/MurTree/pymurtree?)](https://github.com/MurTree/pymurtree/blob/master/LICENSE)
+[![GitHub](https://img.shields.io/github/license/koenderinklab/openddm?)](https://github.com/MurTree/pymurtree/blob/master/LICENSE)
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/MurTree/pymurtree/wheels.yml)
-[![codecov](https://codecov.io/gh/MurTree/pymurtree/branch/develop/graph/badge.svg?token=2TKHE7IN49)](https://codecov.io/gh/MurTree/pymurtree)
+[![codecov](https://codecov.io/gh/koenderinklab/openddm/branch/master/graph/badge.svg?token=V4VZcNYyMG)](https://codecov.io/gh/MurTree/pymurtree)
 ![GitHub repo size](https://img.shields.io/github/repo-size/MurTree/pymurtree)
 
 Warning:
@@ -10,7 +10,7 @@ Warning:
 > The current version only supports Linux.
 
 
-PyMurTree is a Python wrapper for the [MurTree project](https://github.com/MurTree/murtree). The MurTree algorithm constructs optimal classification trees that minimize the misclassification score of a given dataset while respecting constraints on depth and number of feature nodes. The sparse objective, which penalizes each node added in the tree, is also supported.
+PyMurTree is a Python wrapper for the [MurTree project](https://github.com/DCC/murtree). The MurTree algorithm constructs optimal classification trees that minimize the misclassification score of a given dataset while respecting constraints on depth and number of feature nodes. The sparse objective, which penalizes each node added in the tree, is also supported.
 
 ---
 ## **Citation**

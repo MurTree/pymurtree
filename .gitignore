@@ -36,6 +36,10 @@ share/python-wheels/
 *.egg
 MANIFEST
 
+# Docs
+**/_build/
+
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
@@ -45,3 +49,4 @@ _no_*
 **/__pycache__/
 *pymurtree_data/
 **/*.cpython*
+*.pyd
