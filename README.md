@@ -1,8 +1,8 @@
 # PyMurTree 
 
-[![GitHub](https://img.shields.io/github/license/koenderinklab/openddm?)](https://github.com/MurTree/pymurtree/blob/master/LICENSE)
+[![GitHub](https://img.shields.io/github/license/MurTree/pymurtree?)](https://github.com/MurTree/pymurtree/blob/master/LICENSE)
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/MurTree/pymurtree/wheels.yml)
-[![codecov](https://codecov.io/gh/koenderinklab/openddm/branch/master/graph/badge.svg?token=V4VZcNYyMG)](https://codecov.io/gh/MurTree/pymurtree)
+[![codecov](https://codecov.io/gh/MurTree/pymurtree/branch/develop/graph/badge.svg?token=2TKHE7IN49)](https://codecov.io/gh/MurTree/pymurtree)
 ![GitHub repo size](https://img.shields.io/github/repo-size/MurTree/pymurtree)
 
 Warning:
