@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from . import lib
+from typing import Dict
 from pymurtree.parameters import Parameters
 
 def standardize_to_dtype_int32(np_array: np.ndarray) -> np.ndarray:
@@ -267,7 +268,10 @@ class OptimalDecisionTreeClassifier:
 
         return self.__tree.tree_nodes()
 
-    def export_text(self, filepath: str = '') -> None:
+    def export_text(self,
+                    filepath: str = '',
+                    featurenames: np.ndarray = None,
+                    classnames: Dict[int, str] = None) -> None:
         '''
         Create a text representation of all the rules in the decision tree. 
         Text is written to out_file if given, otherwise it is displayed on screen (standard ouput).
@@ -275,6 +279,8 @@ class OptimalDecisionTreeClassifier:
         Parameters
         ----------
             filepath (str, optional): Name of the output file.
+            featurenames (dict, optional): 1D array that represents the names of the features.
+            classnames (dict, optional): Dictionary with int keys and str values that represent the class names.
         
         Returns
         -------
@@ -284,15 +290,20 @@ class OptimalDecisionTreeClassifier:
         if self.__tree is None:
             raise ValueError('self.__tree is None')
         else:
-            self.__tree.export_text(filepath)
+            self.__tree.export_text(filepath, featurenames, classnames)
 
 
-    def export_dot(self, filepath: str = '') -> None:
+    def export_dot(self,
+                   filepath: str = '',
+                   featurenames: np.ndarray = None,
+                   classnames: Dict[int, str] = None) -> None:
         '''
         Export the decision tree in DOT format for visualization with Graphviz.
 
         Parameters
             filepath (str, optional): Name of the output file.
+            featurenames (dict, optional): 1D array that represents the names of the features.
+            classnames (dict, optional): Dictionary with int keys and str values that represent the class names.
         
         Returns
             None
@@ -300,4 +311,4 @@ class OptimalDecisionTreeClassifier:
         if self.__tree is None:
             raise ValueError('self.__tree is None')
         else:
-            self.__tree.export_dot(filepath)
+            self.__tree.export_dot(filepath, featurenames, classnames)
