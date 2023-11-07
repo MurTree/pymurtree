@@ -290,7 +290,16 @@ class OptimalDecisionTreeClassifier:
         if self.__tree is None:
             raise ValueError('self.__tree is None')
         else:
-            self.__tree.export_text(filepath, featurenames, classnames)
+            if featurenames is None:
+                if classnames is None:
+                    self.__tree.export_text(filepath)
+                else:
+                    self.__tree.export_text(filepath, classnames = classnames)
+            else:
+                if classnames is None:
+                    self.__tree.export_text(filepath, featurenames = featurenames)
+                else:
+                    self.__tree.export_text(filepath, featurenames, classnames)
 
 
     def export_dot(self,
@@ -311,4 +320,13 @@ class OptimalDecisionTreeClassifier:
         if self.__tree is None:
             raise ValueError('self.__tree is None')
         else:
-            self.__tree.export_dot(filepath, featurenames, classnames)
+            if featurenames is None:
+                if classnames is None:
+                    self.__tree.export_dot(filepath)
+                else:
+                    self.__tree.export_dot(filepath, classnames = classnames)
+            else:
+                if classnames is None:
+                    self.__tree.export_dot(filepath, featurenames = featurenames)
+                else:
+                    self.__tree.export_dot(filepath, featurenames, classnames)

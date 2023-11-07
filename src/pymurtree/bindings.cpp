@@ -225,18 +225,18 @@ PYBIND11_MODULE(lib, m) {
     // Bindings for the ExportTree class
 
     solver_result.def("export_text", [](const SolverResult &solverresult, std::string filepath,
-        std::vector<std::string>& featurenames, py::dict pycn) {
+        std::vector<std::string> featurenames, std::unordered_map<unsigned int, std::string> classnames) {
         py::scoped_ostream_redirect stream(std::cout, py::module_::import("sys").attr("stdout"));
-        std::unordered_map<unsigned int, std::string> classnames = createMap(pycn);
         ExportTree::exportText(solverresult.decision_tree_, featurenames, classnames, filepath);
-    });
+    }, py::arg("filepath") = "", py::arg("featurenames") = std::vector<std::string>(), 
+    py::arg("classnames") = std::unordered_map<unsigned int, std::string>());
 
     solver_result.def("export_dot", [](const SolverResult &solverresult, std::string filepath,
-        std::vector<std::string>& featurenames, py::dict pycn) {
+        std::vector<std::string> featurenames, std::unordered_map<unsigned int, std::string> classnames) {
         py::scoped_ostream_redirect stream(std::cout, py::module_::import("sys").attr("stdout"));
-        std::unordered_map<unsigned int, std::string> classnames = createMap(pycn);
         ExportTree::exportDot(solverresult.decision_tree_, featurenames, classnames, filepath);
-    }); 
+    }, py::arg("filepath") = "", py::arg("featurenames") = std::vector<std::string>(), 
+    py::arg("classnames") = std::unordered_map<unsigned int, std::string>()); 
 
 }
 
