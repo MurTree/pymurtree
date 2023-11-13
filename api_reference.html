@@ -113,27 +113,44 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pymurtree.OptimalDecisionTreeClassifier.OptimalDecisionTreeClassifier.export_dot">
-<span class="sig-name descname"><span class="pre">export_dot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pymurtree.OptimalDecisionTreeClassifier.OptimalDecisionTreeClassifier.export_dot" title="Permalink to this definition"></a></dt>
-<dd><p>Export the decision tree in DOT format for visualization with Graphviz.</p>
-<dl class="simple">
-<dt>Parameters</dt><dd><p>filepath (str, optional): Name of the output file.</p>
+<span class="sig-name descname"><span class="pre">export_dot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pymurtree.OptimalDecisionTreeClassifier.OptimalDecisionTreeClassifier.export_dot" title="Permalink to this definition"></a></dt>
+<dd><p>Export the decision tree in DOT format for visualization with Graphviz.
+DOT representation is written to out_file if given, otherwise it is displayed on screen (standard output)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>out_file</strong> (<em>(str, optional)</em>) – Name of the output file.</p></li>
+<li><p><strong>feature_names</strong> (<em>(numpy.ndarray, optional)</em>) – 1D Numpy array that represents the names of the features.</p></li>
+<li><p><strong>class_names</strong> (<em>(dict, optional)</em>) – Dictionary with int keys and str values that represent the class names.</p></li>
+</ul>
 </dd>
-<dt>Returns</dt><dd><p>None</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If fit method has not been called (self.__tree is None):</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pymurtree.OptimalDecisionTreeClassifier.OptimalDecisionTreeClassifier.export_text">
-<span class="sig-name descname"><span class="pre">export_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pymurtree.OptimalDecisionTreeClassifier.OptimalDecisionTreeClassifier.export_text" title="Permalink to this definition"></a></dt>
-<dd><p>Create a text representation of all the rules in the decision tree.
+<span class="sig-name descname"><span class="pre">export_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#pymurtree.OptimalDecisionTreeClassifier.OptimalDecisionTreeClassifier.export_text" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a text representation of all the rules in the decision tree.
 Text is written to out_file if given, otherwise it is displayed on screen (standard ouput).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filepath (str, optional)</strong> (<em>Name of the output file.</em>)</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>out_file</strong> (<em>(str, optional)</em>) – Name of the output file.</p></li>
+<li><p><strong>feature_names</strong> (<em>(numpy.ndarray, optional)</em>) – 1D Numpy array that represents the names of the features.</p></li>
+<li><p><strong>class_names</strong> (<em>(dict, optional)</em>) – Dictionary with int keys and str values that represent the class names.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If fit method has not been called (self.__tree is None):</p>
 </dd>
 </dl>
 </dd></dl>
