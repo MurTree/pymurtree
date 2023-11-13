@@ -1,0 +1,5 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", fontname="helvetica", fontsize="8"] ;
+edge [fontname="helvetica", fontsize="6"] ;
+0 [label=<cls4>, color="#B77F8C" fillcolor="#B77F8C"] ;
+}

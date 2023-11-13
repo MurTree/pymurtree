@@ -1,6 +1,7 @@
 #include "exporttree.h"
 
-void ExportTree::exportText(MurTree::DecisionNode* tree, std::string filepath) {
+void ExportTree::exportText(MurTree::DecisionNode* tree, const std::vector<std::string>& featurenames,
+    const std::unordered_map<unsigned int, std::string>& classnames, std::string filepath) {
 
     if (tree == nullptr) {
         return;
@@ -8,52 +9,57 @@ void ExportTree::exportText(MurTree::DecisionNode* tree, std::string filepath) {
 
     try {
         if (filepath.empty()) {
-            ExportTree tmp(tree, &std::cout, true);
+            ExportTree tmp(tree, featurenames, classnames, &std::cout, true);
         }
         else {
             std::ofstream ofs(filepath, std::ofstream::out);
             if(!ofs.is_open() || ofs.fail()){
                 throw std::runtime_error("Failed to open text output file.");        
             }
-	        ExportTree tmp(tree, &ofs, true);
+	        ExportTree tmp(tree, featurenames, classnames, &ofs, true);
 	        ofs.close();
             std::cout << "Tree saved in " << filepath << std::endl;
         }
     }
     catch(std::runtime_error err) {
-        std::cout << "Failed to write text output file. Message: "
+        std::cout << "Failed to write text output. Message: "
               << err.what() << std::endl;
     }
 
 }
 
-void ExportTree::exportDot(MurTree::DecisionNode* tree, std::string filepath) {
+void ExportTree::exportDot(MurTree::DecisionNode* tree, const std::vector<std::string>& featurenames,
+    const std::unordered_map<unsigned int, std::string>& classnames, std::string filepath) {
    
     if (tree == nullptr) {
         return;
     }
 
-    if (filepath.empty()) {
-        filepath = "tree.dot";
-    }
-
     try {
-        std::ofstream ofs(filepath, std::ofstream::out);
-        if (!ofs.is_open() || ofs.fail()) {
-            throw std::runtime_error("Failed to open output file.");
+        if(filepath.empty()){
+            ExportTree tmp(tree, featurenames, classnames, &std::cout, false);
+            // add new line character if printing to std::cout
+            std::cout << std::endl;
         }
-        ExportTree tmp(tree, &ofs, false);
-        ofs.close(); 
-        std::cout << "Tree saved in " << filepath << std::endl;
+        else {
+            std::ofstream ofs(filepath, std::ofstream::out);
+            if (!ofs.is_open() || ofs.fail()) {
+                throw std::runtime_error("Failed to open output file.");
+            }
+            ExportTree tmp(tree, featurenames, classnames, &ofs, false);
+            ofs.close(); 
+            std::cout << "Tree saved in " << filepath << std::endl;
+        }
     }
     catch(std::runtime_error err) {
-        std::cout << "Failed to write dot output file. Message: "
+        std::cout << "Failed to write dot output. Message: "
               << err.what() << std::endl;
     }
 }
 
-ExportTree::ExportTree(MurTree::DecisionNode* tree, std::ostream* os, bool textformat)
-    : m_tree(tree), m_os(os), nodecount(0)
+ExportTree::ExportTree(MurTree::DecisionNode* tree, const std::vector<std::string>& featurenames,
+    const std::unordered_map<unsigned int, std::string>& classnames, std::ostream* os, bool textformat)
+    : m_tree(tree), featurenames(featurenames), classnames(classnames), m_os(os), nodecount(0)
 {
     if(textformat) {
         // print right-side first
@@ -69,7 +75,6 @@ ExportTree::ExportTree(MurTree::DecisionNode* tree, std::ostream* os, bool textf
         writeNodeInDotFormat(tree, false, -1);
         output = "}";
         m_os->write(output.data(), output.size());
-
     }
 }
 
@@ -85,11 +90,22 @@ void ExportTree::writeEdgeInTextFormat(MurTree::DecisionNode* parentnode, bool r
     std::string output = "|---";
 
     if(parentnode->IsLabelNode()) {
-        output.append("class: " + std::to_string(parentnode->label_));
+        std::unordered_map<unsigned int, std::string>::const_iterator it = classnames.find(parentnode->label_);
+        if (it == classnames.end()) {
+            output.append("class: " + std::to_string(parentnode->label_));
+        }
+        else {
+            output.append(it->second);
+        }
     }
     else {
-        output.append("feature #" + std::to_string(parentnode->feature_) + " is ");
-        rightedge ? output.append("present") : output.append("missing");  
+        if (featurenames.size() >= parentnode->feature_ + 1) {
+            output.append(featurenames[parentnode->feature_] + " is ");
+        }
+        else {
+            output.append("feature #" + std::to_string(parentnode->feature_) + " is ");
+        }
+        rightedge ? output.append("true") : output.append("false");  
     }
 
     for (int i = 0; i < indentationlevel; i++) {
@@ -129,10 +145,25 @@ void ExportTree::writeNodeInDotFormat(MurTree::DecisionNode* node, bool rightedg
     std::string output = std::to_string(nodecount);
 
     if(node->IsLabelNode()) {
-        output.append(" [label=<class " + std::to_string(node->label_) + ">, color=\"#B77F8C\" fillcolor=\"#B77F8C\"] ;\n");
+        std::string clsname;
+        std::unordered_map<unsigned int, std::string>::const_iterator it = classnames.find(node->label_);
+        if (it == classnames.end()) {
+            clsname.append("class " + std::to_string(node->label_));
+        }
+        else {
+            clsname.append(it->second);
+        }
+        output.append(" [label=<" + clsname + ">, color=\"#B77F8C\" fillcolor=\"#B77F8C\"] ;\n");
     }
     else {
-        output.append(" [label=<feature #" + std::to_string(node->feature_) + ">, color=\"#8CB77F\", fillcolor=\"#8CB77F\"] ;\n"); 
+        std::string ftname;
+        if (featurenames.size() >= node->feature_ + 1) {
+            ftname = featurenames[node->feature_];
+        }
+        else {
+            ftname = "feature #" + std::to_string(node->feature_);
+        } 
+        output.append(" [label=<" + ftname + ">, color=\"#8CB77F\", fillcolor=\"#8CB77F\"] ;\n"); 
     }
 
     if (parentid >= 0) {

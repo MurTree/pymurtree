@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from . import lib
+from typing import Dict
 from pymurtree.parameters import Parameters
 
 def standardize_to_dtype_int32(np_array: np.ndarray) -> np.ndarray:
@@ -253,7 +254,7 @@ class OptimalDecisionTreeClassifier:
         return self.__tree.tree_depth()
 
     def num_nodes(self) -> int:
-        '''
+        """
         Returns the number of nodes in the tree.
 
         Parameters
@@ -263,41 +264,86 @@ class OptimalDecisionTreeClassifier:
         Returns
         -------
             int: The number of nodes in the tree.
-        '''
+        """
 
         return self.__tree.tree_nodes()
 
-    def export_text(self, filepath: str = '') -> None:
-        '''
-        Create a text representation of all the rules in the decision tree. 
+    def export_text(self,
+                    out_file: str = '',
+                    feature_names: np.ndarray = None,
+                    class_names: Dict[int, str] = None) -> None:
+        """   
+        Creates a text representation of all the rules in the decision tree. 
         Text is written to out_file if given, otherwise it is displayed on screen (standard ouput).
 
         Parameters
         ----------
-            filepath (str, optional): Name of the output file.
+            out_file : (str, optional)
+                Name of the output file.
+            feature_names : (numpy.ndarray, optional)
+                1D Numpy array that represents the names of the features.
+            class_names : (dict, optional)
+                Dictionary with int keys and str values that represent the class names.
         
         Returns
         -------
             None
-        '''
+
+        Raises
+        ------
+            ValueError: If fit method has not been called (self.__tree is None) 
+        """ 
         
         if self.__tree is None:
             raise ValueError('self.__tree is None')
         else:
-            self.__tree.export_text(filepath)
+            if feature_names is None:
+                if class_names is None:
+                    self.__tree.export_text(out_file)
+                else:
+                    self.__tree.export_text(out_file, classnames = class_names)
+            else:
+                if class_names is None:
+                    self.__tree.export_text(out_file, feature_names)
+                else:
+                    self.__tree.export_text(out_file, feature_names, class_names)
 
 
-    def export_dot(self, filepath: str = '') -> None:
-        '''
+    def export_dot(self,
+                   out_file: str = '',
+                   feature_names: np.ndarray = None,
+                   class_names: Dict[int, str] = None) -> None:
+        """
         Export the decision tree in DOT format for visualization with Graphviz.
+        DOT representation is written to out_file if given, otherwise it is displayed on screen (standard output)
 
         Parameters
-            filepath (str, optional): Name of the output file.
+        ----------
+            out_file : (str, optional)
+                Name of the output file.
+            feature_names : (numpy.ndarray, optional)
+                1D Numpy array that represents the names of the features.
+            class_names : (dict, optional)
+                Dictionary with int keys and str values that represent the class names.
         
         Returns
+        ---------
             None
-        '''
+
+        Raises
+        ------
+            ValueError: If fit method has not been called (self.__tree is None) 
+        """
         if self.__tree is None:
             raise ValueError('self.__tree is None')
         else:
-            self.__tree.export_dot(filepath)
+            if feature_names is None:
+                if class_names is None:
+                    self.__tree.export_dot(out_file)
+                else:
+                    self.__tree.export_dot(out_file, classnames = class_names)
+            else:
+                if class_names is None:
+                    self.__tree.export_dot(out_file, feature_names)
+                else:
+                    self.__tree.export_dot(out_file, feature_names, class_names)

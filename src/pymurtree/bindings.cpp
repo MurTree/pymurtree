@@ -13,7 +13,6 @@
 
 namespace py = pybind11;
 using namespace MurTree;
-
 // This function is used to convert a numpy array to a vector of vectors holding feature vector binary types
 // that were defined in the murtree library
 std::vector<std::vector<FeatureVectorBinary>> ReadDataDL(const std::vector<std::vector<int>>& vector, int duplicate_instances_factor)
@@ -49,7 +48,7 @@ std::vector<std::vector<FeatureVectorBinary>> ReadDataDL(const std::vector<std::
 }
 
 // Utility function to construct a ParameterHandler object
-ParameterHandler createParameters( unsigned int time, unsigned int max_depth,
+ParameterHandler createParameters(unsigned int time, unsigned int max_depth,
 unsigned int max_num_nodes, float sparse_coefficient, bool verbose,
 bool all_trees, bool incremental_frequency, bool similarity_lower_bound,
 unsigned int node_selection, unsigned int feature_ordering,
@@ -95,6 +94,18 @@ int random_seed, unsigned int cache_type, int duplicate_factor)
         ph.SetStringParameter("cache-type", "dataset");
     }
     return ph;
+}
+
+
+// Utility function to convert a py::dict into an std::unordered_map
+std::unordered_map<unsigned int, std::string> createMap(const py::dict d) {
+    std::unordered_map<unsigned int, std::string> m_map;
+    for (std::pair<py::handle, py::handle> item : d) {
+        unsigned int key = item.first.cast<int>();
+        std::string value = item.second.cast<std::string>();
+        m_map[key] = value;
+    }
+    return m_map;
 }
 
 
@@ -213,15 +224,19 @@ PYBIND11_MODULE(lib, m) {
 
     // Bindings for the ExportTree class
 
-    solver_result.def("export_text", [](const SolverResult &solverresult, std::string filepath) {
+    solver_result.def("export_text", [](const SolverResult &solverresult, std::string filepath,
+        std::vector<std::string> featurenames, std::unordered_map<unsigned int, std::string> classnames) {
         py::scoped_ostream_redirect stream(std::cout, py::module_::import("sys").attr("stdout"));
-        ExportTree::exportText(solverresult.decision_tree_, filepath);
-    });
+        ExportTree::exportText(solverresult.decision_tree_, featurenames, classnames, filepath);
+    }, py::arg("filepath") = "", py::arg("featurenames") = std::vector<std::string>(), 
+    py::arg("classnames") = std::unordered_map<unsigned int, std::string>());
 
-    solver_result.def("export_dot", [](const SolverResult &solverresult, std::string filepath) {
+    solver_result.def("export_dot", [](const SolverResult &solverresult, std::string filepath,
+        std::vector<std::string> featurenames, std::unordered_map<unsigned int, std::string> classnames) {
         py::scoped_ostream_redirect stream(std::cout, py::module_::import("sys").attr("stdout"));
-        ExportTree::exportDot(solverresult.decision_tree_, filepath);
-    }); 
+        ExportTree::exportDot(solverresult.decision_tree_, featurenames, classnames, filepath);
+    }, py::arg("filepath") = "", py::arg("featurenames") = std::vector<std::string>(), 
+    py::arg("classnames") = std::unordered_map<unsigned int, std::string>()); 
 
 }
 

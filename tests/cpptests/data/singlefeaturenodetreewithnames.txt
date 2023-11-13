@@ -1,0 +1,2 @@
+|---fftt11 is true
+|---fftt11 is false
