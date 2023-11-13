@@ -23,7 +23,7 @@ public:
      * @param[in] tree          top node of the tree
      * @param[in] featurenames  names of features, generic names will be used if not specified (eg feature #3)
      * @param[in] classnames    class names, training dataset labels will be used if not specified
-     * @param[in] filepath  path to output file, "tree.dot" will be used if not specified 
+     * @param[in] filepath  path to output file, std::cout will be used if not specified 
      */
     static void exportDot(MurTree::DecisionNode* tree = nullptr,
                             const std::vector<std::string>& featurenames = std::vector<std::string>(),

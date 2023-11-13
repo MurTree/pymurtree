@@ -22,7 +22,7 @@ void ExportTree::exportText(MurTree::DecisionNode* tree, const std::vector<std::
         }
     }
     catch(std::runtime_error err) {
-        std::cout << "Failed to write text output file. Message: "
+        std::cout << "Failed to write text output. Message: "
               << err.what() << std::endl;
     }
 
@@ -35,21 +35,24 @@ void ExportTree::exportDot(MurTree::DecisionNode* tree, const std::vector<std::s
         return;
     }
 
-    if (filepath.empty()) {
-        filepath = "tree.dot";
-    }
-
     try {
-        std::ofstream ofs(filepath, std::ofstream::out);
-        if (!ofs.is_open() || ofs.fail()) {
-            throw std::runtime_error("Failed to open output file.");
+        if(filepath.empty()){
+            ExportTree tmp(tree, featurenames, classnames, &std::cout, false);
+            // add new line character if printing to std::cout
+            std::cout << std::endl;
         }
-        ExportTree tmp(tree, featurenames, classnames, &ofs, false);
-        ofs.close(); 
-        std::cout << "Tree saved in " << filepath << std::endl;
+        else {
+            std::ofstream ofs(filepath, std::ofstream::out);
+            if (!ofs.is_open() || ofs.fail()) {
+                throw std::runtime_error("Failed to open output file.");
+            }
+            ExportTree tmp(tree, featurenames, classnames, &ofs, false);
+            ofs.close(); 
+            std::cout << "Tree saved in " << filepath << std::endl;
+        }
     }
     catch(std::runtime_error err) {
-        std::cout << "Failed to write dot output file. Message: "
+        std::cout << "Failed to write dot output. Message: "
               << err.what() << std::endl;
     }
 }
@@ -72,7 +75,6 @@ ExportTree::ExportTree(MurTree::DecisionNode* tree, const std::vector<std::strin
         writeNodeInDotFormat(tree, false, -1);
         output = "}";
         m_os->write(output.data(), output.size());
-
     }
 }
 

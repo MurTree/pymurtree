@@ -105,7 +105,7 @@ TEST_F(ExportTreeTest, MessagePrintedIfTextFileCreationFails) {
     std::vector<std::string> fn;
     ClassNames cn;
     ExportTree::exportText(ExportTreeTest::tree_5nodes_4edges, fn, cn, "/etc/tree.txt");
-    std::string expectedmsg = "Failed to write text output file. Message:";
+    std::string expectedmsg = "Failed to write text output. Message:";
     EXPECT_NE(testing::internal::GetCapturedStdout().find(expectedmsg), std::string::npos);
 }
 
@@ -114,7 +114,7 @@ TEST_F(ExportTreeTest, MessagePrintedIfDotFileCreationFails) {
     std::vector<std::string> fn;
     ClassNames cn;
     ExportTree::exportDot(ExportTreeTest::tree_5nodes_4edges, fn, cn, "/etc/tree.txt");
-    std::string expectedmsg = "Failed to write dot output file. Message:";
+    std::string expectedmsg = "Failed to write dot output. Message:";
     EXPECT_NE(testing::internal::GetCapturedStdout().find(expectedmsg), std::string::npos);
 }
 
@@ -162,6 +162,16 @@ TEST_F(ExportTreeTest, TextConsoleOutputIsTheSameAsTextFile) {
     ExportTree::exportText(ExportTreeTest::tree_5nodes_4edges, ExportTreeTest::tree_5nodes_4edges_featurenames,
     ExportTreeTest::tree_5nodes_4edges_classnames, "TextConsoleOutputIsTheSameAsTextFile.txt");
     EXPECT_EQ(console, readFile("TextConsoleOutputIsTheSameAsTextFile.txt"));
+}
+
+TEST_F(ExportTreeTest, DotConsoleOutputIsTheSameAsDotFile) {
+    testing::internal::CaptureStdout();
+    ExportTree::exportDot(ExportTreeTest::tree_5nodes_4edges,
+    ExportTreeTest::tree_5nodes_4edges_featurenames, ExportTreeTest::tree_5nodes_4edges_classnames, "");
+    std::string console = testing::internal::GetCapturedStdout();
+    ExportTree::exportDot(ExportTreeTest::tree_5nodes_4edges, ExportTreeTest::tree_5nodes_4edges_featurenames,
+    ExportTreeTest::tree_5nodes_4edges_classnames, "DotConsoleOutputIsTheSameAsDotFile.dot");
+    EXPECT_EQ(console, readFile("DotConsoleOutputIsTheSameAsDotFile.dot"));
 }
 
 TEST_F(ExportTreeTest, DotFileHeaderIsCorrect) {

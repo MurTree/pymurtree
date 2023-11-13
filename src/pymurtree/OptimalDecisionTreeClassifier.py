@@ -308,7 +308,7 @@ class OptimalDecisionTreeClassifier:
                    class_names: Dict[int, str] = None) -> None:
         '''
         Export the decision tree in DOT format for visualization with Graphviz.
-        DOT representation is written to out_file if give, otherwise it is saved in tree.dot
+        DOT representation is written to out_file if give, otherwise it is displayed on screen (standard output)
 
         Parameters
             out_file (str, optional): Name of the output file.

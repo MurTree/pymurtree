@@ -247,7 +247,7 @@ def test_export_text_exception_null_tree():
     with pytest.raises(Exception):
         clf._export_text()
 
-def test_export_text_file_is_created(decision_tree, tmp_path):
+def test_export_text_file_is_created_with_correct_name(decision_tree, tmp_path):
     # Text export file is created with correct name
     txtfile = str(tmp_path) + "mytesttree.txt"
     decision_tree.export_text(txtfile)
@@ -316,9 +316,9 @@ def test_export_dot_exception_null_tree(decision_tree):
     with pytest.raises(Exception):
         clf._export_dot()
 
-def test_export_dot_file_is_created(decision_tree, tmp_path):
+def test_export_dot_file_is_created_with_correct_name(decision_tree, tmp_path):
     # Dot export file is created with correct name
-    dotfile = str(tmp_path) + "mytesttree.txt"
+    dotfile = str(tmp_path) + "mytesttree.dot"
     decision_tree.export_dot(dotfile)
     assert(os.path.isfile(dotfile)) 
 
@@ -330,52 +330,48 @@ def test_export_dot_success_msg(decision_tree, tmp_path, capsys):
     expected_message = "Tree saved in " + dotfile
     assert expected_message in captured.out
     
-def test_export_dot_output_is_correct(decision_tree_for_export_tests, decision_tree_dot_output, tmp_path):
-    # Export Dot file output is correct
-    dotfile = str(tmp_path) + "testexportdotoutputiscorrect.dot"
-    decision_tree_for_export_tests.export_dot(dotfile)
+def test_export_dot_file_output_matches_console_output(decision_tree, tmp_path, capsys):
+    # Text console output is the same as dot file
+    decision_tree.export_dot()
+    captured = capsys.readouterr()
+    dotfile = str(tmp_path) + "testexportdotfileoutputmatchesconsoleoutput.dot"
+    decision_tree.export_dot(dotfile)
     # Read the contents of the text file
     with open(dotfile, 'r') as file:
         dotfile_contents = file.read()
     # Check that the captured output is the same as the contents of the text file
-    assert dotfile_contents == decision_tree_dot_output
+    assert captured.out.strip() == dotfile_contents.strip()
+
+def test_export_dot_output_is_correct(decision_tree_for_export_tests, decision_tree_dot_output, capsys):
+    # Export Dot file output is correct
+    decision_tree_for_export_tests.export_dot()
+    captured = capsys.readouterr()
+    assert captured.out.strip() == decision_tree_dot_output
 
 def test_export_dot_output_with_feature_names_is_correct(decision_tree_for_export_tests,
     											        feature_names_export_tests,
                                                         decision_tree_dot_output_with_feature_names,
-														tmp_path):
+														capsys):
 	# Export Dot file output with feature names is correct
-	dotfile = str(tmp_path) + "testexportdotoutputwithfeaturenamesiscorrect.dot"
-	decision_tree_for_export_tests.export_dot(dotfile, feature_names_export_tests)
-    # Read the contents of the text file
-	with open(dotfile, 'r') as file:
-		dotfile_contents = file.read()
-    # Check that the captured output is the same as the contents of the text file
-	assert dotfile_contents == decision_tree_dot_output_with_feature_names
+	decision_tree_for_export_tests.export_dot(feature_names = feature_names_export_tests)
+	captured = capsys.readouterr()
+	assert captured.out.strip() == decision_tree_dot_output_with_feature_names
 
 def test_export_dot_output_with_class_names_is_correct(decision_tree_for_export_tests,
     											       class_names_export_tests,
                                                        decision_tree_dot_output_with_class_names,
-													   tmp_path):
+													   capsys):
 	# Export Dot file output with class names is correct
-	dotfile = str(tmp_path) + "testexportdotoutputwithclassnamesiscorrect.dot"
-	decision_tree_for_export_tests.export_dot(dotfile, class_names = class_names_export_tests)
-    # Read the contents of the text file
-	with open(dotfile, 'r') as file:
-		dotfile_contents = file.read()
-    # Check that the captured output is the same as the contents of the text file
-	assert dotfile_contents == decision_tree_dot_output_with_class_names
+	decision_tree_for_export_tests.export_dot(class_names = class_names_export_tests)
+	captured = capsys.readouterr()
+	assert captured.out.strip() == decision_tree_dot_output_with_class_names
      
 def test_export_dot_output_with_feature_and_class_names_is_correct(decision_tree_for_export_tests,
 																feature_names_export_tests,
 																class_names_export_tests,
                                                         		decision_tree_dot_output_with_feature_and_class_names,
-																tmp_path):
+																capsys):
 	# Export Dot file output with feature and class names is correct
-	dotfile = str(tmp_path) + "testexportdotoutputwithfeatureandclassnamesiscorrect.dot"
-	decision_tree_for_export_tests.export_dot(dotfile, feature_names_export_tests, class_names_export_tests)
-    # Read the contents of the text file
-	with open(dotfile, 'r') as file:
-		dotfile_contents = file.read()
-    # Check that the captured output is the same as the contents of the text file
-	assert dotfile_contents == decision_tree_dot_output_with_feature_and_class_names
+	decision_tree_for_export_tests.export_dot(feature_names = feature_names_export_tests, class_names = class_names_export_tests)
+	captured = capsys.readouterr()
+	assert captured.out.strip() == decision_tree_dot_output_with_feature_and_class_names
