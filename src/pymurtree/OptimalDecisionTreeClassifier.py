@@ -269,18 +269,18 @@ class OptimalDecisionTreeClassifier:
         return self.__tree.tree_nodes()
 
     def export_text(self,
-                    filepath: str = '',
-                    featurenames: np.ndarray = None,
-                    classnames: Dict[int, str] = None) -> None:
+                    out_file: str = '',
+                    feature_names: np.ndarray = None,
+                    class_names: Dict[int, str] = None) -> None:
         '''
         Create a text representation of all the rules in the decision tree. 
         Text is written to out_file if given, otherwise it is displayed on screen (standard ouput).
 
         Parameters
         ----------
-            filepath (str, optional): Name of the output file.
-            featurenames (dict, optional): 1D array that represents the names of the features.
-            classnames (dict, optional): Dictionary with int keys and str values that represent the class names.
+            out_file (str, optional): Name of the output file.
+            feature_names (numpy.ndarray, optional): 1D Numpy array that represents the names of the features.
+            class_names (dict, optional): Dictionary with int keys and str values that represent the class names.
         
         Returns
         -------
@@ -290,29 +290,30 @@ class OptimalDecisionTreeClassifier:
         if self.__tree is None:
             raise ValueError('self.__tree is None')
         else:
-            if featurenames is None:
-                if classnames is None:
-                    self.__tree.export_text(filepath)
+            if feature_names is None:
+                if class_names is None:
+                    self.__tree.export_text(out_file)
                 else:
-                    self.__tree.export_text(filepath, classnames = classnames)
+                    self.__tree.export_text(out_file, classnames = class_names)
             else:
-                if classnames is None:
-                    self.__tree.export_text(filepath, featurenames = featurenames)
+                if class_names is None:
+                    self.__tree.export_text(out_file, feature_names)
                 else:
-                    self.__tree.export_text(filepath, featurenames, classnames)
+                    self.__tree.export_text(out_file, feature_names, class_names)
 
 
     def export_dot(self,
-                   filepath: str = '',
-                   featurenames: np.ndarray = None,
-                   classnames: Dict[int, str] = None) -> None:
+                   out_file: str = '',
+                   feature_names: np.ndarray = None,
+                   class_names: Dict[int, str] = None) -> None:
         '''
         Export the decision tree in DOT format for visualization with Graphviz.
+        DOT representation is written to out_file if give, otherwise it is saved in tree.dot
 
         Parameters
-            filepath (str, optional): Name of the output file.
-            featurenames (dict, optional): 1D array that represents the names of the features.
-            classnames (dict, optional): Dictionary with int keys and str values that represent the class names.
+            out_file (str, optional): Name of the output file.
+            feature_names (numpy.ndarray, optional): 1D Numpy array that represents the names of the features.
+            class_names (dict, optional): Dictionary with int keys and str values that represent the class names.
         
         Returns
             None
@@ -320,13 +321,13 @@ class OptimalDecisionTreeClassifier:
         if self.__tree is None:
             raise ValueError('self.__tree is None')
         else:
-            if featurenames is None:
-                if classnames is None:
-                    self.__tree.export_dot(filepath)
+            if feature_names is None:
+                if class_names is None:
+                    self.__tree.export_dot(out_file)
                 else:
-                    self.__tree.export_dot(filepath, classnames = classnames)
+                    self.__tree.export_dot(out_file, classnames = class_names)
             else:
-                if classnames is None:
-                    self.__tree.export_dot(filepath, featurenames = featurenames)
+                if class_names is None:
+                    self.__tree.export_dot(out_file, feature_names)
                 else:
-                    self.__tree.export_dot(filepath, featurenames, classnames)
+                    self.__tree.export_dot(out_file, feature_names, class_names)

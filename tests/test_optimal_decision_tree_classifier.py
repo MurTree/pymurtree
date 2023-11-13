@@ -284,7 +284,7 @@ def test_export_text_output_with_feature_names_is_correct(decision_tree_for_expo
                                                           decision_tree_text_output_with_feature_names,
                                                           capsys):
 	# Export Text console output with feature names is correct
-	decision_tree_for_export_tests.export_text(featurenames = feature_names_export_tests)
+	decision_tree_for_export_tests.export_text(feature_names = feature_names_export_tests)
 	captured = capsys.readouterr()
 	assert captured.out.strip() == decision_tree_text_output_with_feature_names
 
@@ -293,7 +293,7 @@ def test_export_text_output_with_class_names_is_correct(decision_tree_for_export
                                                         decision_tree_text_output_with_class_names,
                                                         capsys):
 	# Export Text console output with class names is correct
-	decision_tree_for_export_tests.export_text(classnames = class_names_export_tests)
+	decision_tree_for_export_tests.export_text(class_names = class_names_export_tests)
 	captured = capsys.readouterr()
 	assert captured.out.strip() == decision_tree_text_output_with_class_names
 
@@ -304,7 +304,7 @@ def test_export_text_output_with_feature_and_class_names_is_correct(decision_tre
 																	decision_tree_text_output_with_feature_and_class_names,
                                                           			capsys):
 	# Export Text console output with feature and class names is correct
-	decision_tree_for_export_tests.export_text(featurenames = feature_names_export_tests, classnames = class_names_export_tests)
+	decision_tree_for_export_tests.export_text(feature_names = feature_names_export_tests, class_names = class_names_export_tests)
 	captured = capsys.readouterr()
 	assert captured.out.strip() == decision_tree_text_output_with_feature_and_class_names
 
@@ -325,7 +325,7 @@ def test_export_dot_file_is_created(decision_tree, tmp_path):
 def test_export_dot_success_msg(decision_tree, tmp_path, capsys):
     # Message is printed after dot file is created
     dotfile = str(tmp_path) + "testexporttextsuccessmsg.dot"
-    decision_tree.export_text(dotfile)
+    decision_tree.export_dot(dotfile)
     captured = capsys.readouterr()
     expected_message = "Tree saved in " + dotfile
     assert expected_message in captured.out
@@ -359,7 +359,7 @@ def test_export_dot_output_with_class_names_is_correct(decision_tree_for_export_
 													   tmp_path):
 	# Export Dot file output with class names is correct
 	dotfile = str(tmp_path) + "testexportdotoutputwithclassnamesiscorrect.dot"
-	decision_tree_for_export_tests.export_dot(filepath = dotfile, classnames = class_names_export_tests)
+	decision_tree_for_export_tests.export_dot(dotfile, class_names = class_names_export_tests)
     # Read the contents of the text file
 	with open(dotfile, 'r') as file:
 		dotfile_contents = file.read()
