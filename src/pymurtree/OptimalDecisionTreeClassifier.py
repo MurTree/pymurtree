@@ -254,7 +254,7 @@ class OptimalDecisionTreeClassifier:
         return self.__tree.tree_depth()
 
     def num_nodes(self) -> int:
-        '''
+        """
         Returns the number of nodes in the tree.
 
         Parameters
@@ -264,7 +264,7 @@ class OptimalDecisionTreeClassifier:
         Returns
         -------
             int: The number of nodes in the tree.
-        '''
+        """
 
         return self.__tree.tree_nodes()
 
@@ -272,20 +272,27 @@ class OptimalDecisionTreeClassifier:
                     out_file: str = '',
                     feature_names: np.ndarray = None,
                     class_names: Dict[int, str] = None) -> None:
-        '''
-        Create a text representation of all the rules in the decision tree. 
+        """   
+        Creates a text representation of all the rules in the decision tree. 
         Text is written to out_file if given, otherwise it is displayed on screen (standard ouput).
 
         Parameters
         ----------
-            out_file (str, optional): Name of the output file.
-            feature_names (numpy.ndarray, optional): 1D Numpy array that represents the names of the features.
-            class_names (dict, optional): Dictionary with int keys and str values that represent the class names.
+            out_file : (str, optional)
+                Name of the output file.
+            feature_names : (numpy.ndarray, optional)
+                1D Numpy array that represents the names of the features.
+            class_names : (dict, optional)
+                Dictionary with int keys and str values that represent the class names.
         
         Returns
         -------
             None
-        '''
+
+        Raises
+        ------
+            ValueError: If fit method has not been called (self.__tree is None) 
+        """ 
         
         if self.__tree is None:
             raise ValueError('self.__tree is None')
@@ -306,18 +313,27 @@ class OptimalDecisionTreeClassifier:
                    out_file: str = '',
                    feature_names: np.ndarray = None,
                    class_names: Dict[int, str] = None) -> None:
-        '''
+        """
         Export the decision tree in DOT format for visualization with Graphviz.
-        DOT representation is written to out_file if give, otherwise it is displayed on screen (standard output)
+        DOT representation is written to out_file if given, otherwise it is displayed on screen (standard output)
 
         Parameters
-            out_file (str, optional): Name of the output file.
-            feature_names (numpy.ndarray, optional): 1D Numpy array that represents the names of the features.
-            class_names (dict, optional): Dictionary with int keys and str values that represent the class names.
+        ----------
+            out_file : (str, optional)
+                Name of the output file.
+            feature_names : (numpy.ndarray, optional)
+                1D Numpy array that represents the names of the features.
+            class_names : (dict, optional)
+                Dictionary with int keys and str values that represent the class names.
         
         Returns
+        ---------
             None
-        '''
+
+        Raises
+        ------
+            ValueError: If fit method has not been called (self.__tree is None) 
+        """
         if self.__tree is None:
             raise ValueError('self.__tree is None')
         else:
