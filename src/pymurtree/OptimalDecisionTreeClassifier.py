@@ -109,8 +109,10 @@ class OptimalDecisionTreeClassifier:
                 The method used for feature ordering. Defaults to None.
             random_seed : (int, optional) 
                 The random seed for the training process. Defaults to None.
-            cache_type (int, optional): The type of cache used for storing the intermediate results. Defaults to None.
-            duplicate_factor (int, optional): The duplicate factor used for parallelization. Defaults to None.
+            cache_type (int, optional):
+                The type of cache used for storing the intermediate results. Defaults to None.
+            duplicate_factor (int, optional):
+                The duplicate factor used for parallelization. Defaults to None.
 
         Returns
         -------

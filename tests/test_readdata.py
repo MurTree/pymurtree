@@ -1,15 +1,16 @@
 '''
 Decription of test cases for readdata.py as user stories and acceptance criteria
 
-Story: As a user I want to read data from a file so that I can use it for training and testing
-AC: The file is written in DL format see the readme for details
-AC: The file is read and converted to a numpy array  (x, y) where x is the feature vectors and y is the labels
-AC: Features are binary values and labels are integers
+Story: As a user I want to read a dataset from a file so that I can use it with pymurtree
+AC: The file is written in a MurTree-compatible format (see https://github.com/MurTree/murtree-data)
+AC: The file is read and converted to numpy arrays (x,y) where y is a 1D array holding the first column of the dataset 
+and x is a 2D array holding the rest of the columns.
+AC: Features are binary values and labels are positive integers
 '''
 import pytest
 import pandas as pd
 import numpy as np
-from pymurtree.readdata import read_from_file
+from pymurtree.readdata import *
 import pymurtree.lib as lib
 import pprint
 
@@ -17,18 +18,12 @@ TRAIN_DATA = "./tests/fixtures/test_dataset.txt"
 
 @pytest.fixture
 def dl_from_file() -> np.ndarray:
-    ''' Read data from DL formatted file and return as numpy array'''
-    x, y = read_from_file(TRAIN_DATA)
+    """ Read data from MurTree formatted file and return as numpy array """
+    x, y = load_murtree_dataset_to_pandas_dataframes(TRAIN_DATA)
     x = x.to_numpy()
     y = y.to_numpy()
     return np.concatenate((y.reshape(-1,1), x), axis=1).astype(np.int32)
 
-@pytest.fixture
-def dl_x_y() -> tuple:
-    ''' Read data from DL formatted file and return as tuple with two numpy arrays 
-    (x, y) where x is the feature vectors and y is the labels'''
-    x, y = read_from_file(TRAIN_DATA)
-    return x, y
 
 @pytest.fixture
 def dl_data_sample() -> np.ndarray:
@@ -39,16 +34,37 @@ def dl_data_sample() -> np.ndarray:
                     ]).astype(np.int32)
                     
 
-# test that data read is correct
-def test_read_from_file():
-    x, y = read_from_file(TRAIN_DATA)
+def test_load_murtree_dataset_to_pandas_dataframes():
+    x, y = load_murtree_dataset_to_pandas_dataframes(TRAIN_DATA)
     assert x is not None
     assert y is not None
     assert type(x) == pd.core.frame.DataFrame
     assert type(y) == pd.core.series.Series
+    assert x.shape == (399,17)
+    assert y.shape == (399,)
+    # check first and last values
+    assert y.iloc[0] == 2
+    assert y.iloc[-1] == 3
+    assert x.iloc[0,:].tolist() == [0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0]
+    assert x.iloc[-1,:].tolist() == [1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0]
+
+def test_load_murtree_dataset_to_numpy_arrays():
+    x, y = load_murtree_dataset_to_numpy_arrays(TRAIN_DATA)
+    assert x is not None
+    assert y is not None
+    assert type(x) == np.ndarray
+    assert type(y) == np.ndarray
+    assert x.shape == (399,17)
+    assert y.shape == (399,)
+    # check first and last values
+    assert y[0] == 2
+    assert y[-1] == 3
+    assert (x[0] == [0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0]).all()
+    assert (x[-1] == [1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0]).all()
+
     
 def test_compare_feature_vectors(dl_from_file):
-    ''' Test that we get exactly the same feature vectors from the file and from the numpy array'''
+    """ Test that we get exactly the same feature vectors from the file and from the numpy array """
     feature_vectors_from_file = lib._read_data_dl(TRAIN_DATA, 1)
     assert feature_vectors_from_file is not None
     assert type(feature_vectors_from_file) == list

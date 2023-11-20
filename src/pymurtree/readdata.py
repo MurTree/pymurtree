@@ -1,18 +1,26 @@
 import pandas
 import numpy
 
-def read_from_file(path: str) -> tuple:
-        """
-        Reads data from a space-separated text file with the following format:
-        The first column contains the target variable (y), and the remaining columns 
-        contain the features (x).
+def load_murtree_dataset_to_pandas_dataframes(path: str) -> tuple:
+        """ 
+        Reads a dataset from a plain text file with the following format:
+            The first column contains the target variable (y), and the remaining columns 
+            contain the features (x).
+            All features must be 0 or 1 and classes should be equal or greater than zero
+            All values should be space-separated integers.
+            No headers or foooters allowed.
+        The function is a wrapper for the pandas.read_csv function.
+        It's provided as a utility function to easily load the datasets in https://github.com/MurTree/murtree-data 
+            
+        Parameters
+        ----------
+            path (str): path to the dataset
 
-        Args:
-            path (str): The path to the text file.
-
-        Returns:
-            tuple: A tuple containing x (a pandas DataFrame with all columns except the first) 
-            and y (a pandas Series representing the first column).
+        Returns
+        -------
+            tuple: conatining:
+                x (pandas.DataFrame): all columns from dataset except the first 
+                y (pandas.Series): first column of dataset
         """
         data = pandas.read_csv(path, sep=' ', header=None)
         y = data.iloc[:, 0]
@@ -20,19 +28,26 @@ def read_from_file(path: str) -> tuple:
         return x, y
 
 
-def load_data(path: str) -> tuple:
+def load_murtree_dataset_to_numpy_arrays(path: str) -> tuple:
         """
-        Reads data from a space-separated text file with the following format:
-        The first column contains the target variable (y), and the remaining columns 
-        contain the features (x).
+        Reads a dataset from a plain text file with the following format:
+            The first column contains the target variable (y), and the remaining columns 
+            contain the features (x).
+            All features must be 0 or 1 and classes should be equal or greater than zero
+            All values should be space-separated integers.
+            No headers or foooters allowed.
+        The function is a wrapper for the numpy.loadtxt function
+        It's provided as a utility function to easily load the datasets in https://github.com/MurTree/murtree-data 
 
-        Args:
-            path (str): The path to the text file.
+        Parameters
+        ----------
+            path (str): path to the dataset
 
-        Returns:
-            tuple: A tuple containing:
-              x (numpy.ndarray): 2D array with all columns except the first 
-              y (numpy.ndarray): 1D array with the first column
+        Returns
+        -------
+            tuple: containing:
+                x (numpy.ndarray): 2D array with all columns except the first 
+                y (numpy.ndarray): 1D array with the first column
         """
         data = numpy.loadtxt(path, dtype=int, delimiter=' ')
         x = data[:, 1:]

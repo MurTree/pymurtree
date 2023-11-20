@@ -7,7 +7,7 @@ import pytest
 import numpy as np
 import os
 import textwrap
-from src.pymurtree import read_from_file
+from src.pymurtree import load_murtree_dataset_to_numpy_arrays
 import pymurtree
 
 TRAIN_DATA = "./tests/fixtures/test_dataset.txt"
@@ -16,10 +16,7 @@ EXPECTED_PREDICT_OUTPUT = "./tests/fixtures/expected_predict_output.txt"
 # Define a fixture for input data with known output values
 @pytest.fixture
 def train_data():
-    x, y = read_from_file(TRAIN_DATA)
-    x = x.to_numpy()
-    y = y.to_numpy()
-    return x, y
+    return load_murtree_dataset_to_numpy_arrays(TRAIN_DATA)
 
 @pytest.fixture
 def x_train_data(train_data):
